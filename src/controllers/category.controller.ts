@@ -1,14 +1,15 @@
 import type { Request, Response } from "express";
-import {prisma} from "../lib/prisma";
-import { CategoryErrors } from "../Errors/categoryErrors";
-
+import { prisma } from "../lib/prisma";
+import { CategoryErrors } from "../validators/categoryErrors";
+import slugify from "slugify";
 // Create Category
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { title, description } = req.body;
-
+    const { title, description, status } = req.body;
+    const slug = slugify(title, { lower: true, strict: true });
+    
     const newCategory = await prisma.category.create({
-      data: { title, description },
+      data: { title, description, slug,  status: status || "DRAFT" },
     });
 
     res.status(201).json({
@@ -20,6 +21,7 @@ export const createCategory = async (req: Request, res: Response) => {
     res.status(500).json({ message: CategoryErrors.SERVER_ERROR });
   }
 };
+
 // Get Categories
 
 export const getCategories = async (_req: Request, res: Response) => {
@@ -27,7 +29,7 @@ export const getCategories = async (_req: Request, res: Response) => {
     const categories = await prisma.category.findMany({
       include: {
         _count: {
-          select: { articles: true }, 
+          select: { articles: true },
         },
       },
       orderBy: { createdAt: "desc" },
@@ -36,7 +38,7 @@ export const getCategories = async (_req: Request, res: Response) => {
     res.status(200).json(categories);
   } catch (error: any) {
     console.error("GET CATEGORIES ERROR:", error);
-    res.status(500).json({ message: CategoryErrors.SERVER_ERROR  });
+    res.status(500).json({ message: CategoryErrors.SERVER_ERROR });
   }
 };
 
@@ -45,7 +47,7 @@ export const getCategories = async (_req: Request, res: Response) => {
 export const updateCategory = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { title, description } = req.body;
+    const { title, description, status } = req.body;
 
     const category = await prisma.category.findUnique({
       where: { id: Number(id) },
@@ -57,7 +59,7 @@ export const updateCategory = async (req: Request, res: Response) => {
 
     const updated = await prisma.category.update({
       where: { id: Number(id) },
-      data: { title, description },
+      data: { title, description, status: status || "DRAFT" },
     });
 
     res.status(200).json({
@@ -65,7 +67,7 @@ export const updateCategory = async (req: Request, res: Response) => {
       category: updated,
     });
   } catch (error) {
-    res.status(500).json({ message: CategoryErrors.SERVER_ERROR});
+    res.status(500).json({ message: CategoryErrors.SERVER_ERROR });
   }
 };
 

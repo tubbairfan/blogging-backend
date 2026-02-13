@@ -5,10 +5,13 @@ import {
   updateArticle,
   deleteArticle,
 } from "../controllers/article.controller";
+import { validateBody } from "../middlewares/validation";
+import { createArticleSchema } from "../validators/article.schema";
+
 
 const router = express.Router();
 
-router.post("/", createArticle);       
+router.post("/", validateBody(createArticleSchema), createArticle);       
 router.get("/", getArticles);          
 router.put("/:id", updateArticle);     
 router.delete("/:id", deleteArticle);  

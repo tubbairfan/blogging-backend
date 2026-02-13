@@ -26,7 +26,7 @@ export const createArticle = async (req: Request, res: Response) => {
       data: {
         name,
         description,
-        status: status || "active",
+        status,
         categoryId: category.id,
       },
       include: { category: true },
