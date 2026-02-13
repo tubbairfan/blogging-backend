@@ -11,7 +11,6 @@ export const createArticle = async (req: Request, res: Response) => {
         message: "Name and Category are required",
       });
     }
-
     const category = await prisma.category.findFirst({
       where: { title: categoryName },
     });
@@ -21,7 +20,6 @@ export const createArticle = async (req: Request, res: Response) => {
         message: "Category not found",
       });
     }
-
     const article = await prisma.article.create({
       data: {
         name,
@@ -60,6 +58,35 @@ export const getArticles = async (_req: Request, res: Response) => {
   }
 };
 
+export const getSingleArticle = async (req: Request, res: Response) => {
+  try {
+    let { id } = req.params;
+
+    const articleId = Number(id);
+    if (isNaN(articleId)) {
+      return res.status(400).json({ message: "Invalid article ID" });
+    }
+
+    const article = await prisma.article.findUnique({
+      where: { id: articleId },
+      include: {
+        category: true,
+      },
+    });
+
+    if (!article) {
+      return res.status(404).json({ message: "Article not found" });
+    }
+
+    res.status(200).json({
+      message: "Article fetched successfully",
+      data: article,
+    });
+  } catch (error) {
+    console.error("GET SINGLE ARTICLE ERROR:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 export const updateArticle = async (req: Request, res: Response) => {
   try {
