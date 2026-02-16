@@ -24,7 +24,6 @@ export const createCategory = async (req: Request, res: Response) => {
 };
 
 // Get Categories
-
 export const getCategories = async (_req: Request, res: Response) => {
   try {
     const categories = await prisma.category.findMany({
