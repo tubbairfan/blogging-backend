@@ -2,15 +2,15 @@ import { z } from "zod";
 import { statusSchema } from "./common.schema";
 
 export const createCategorySchema = z.object({
-  title: z
-    .string({ message: "Invalid" })
-    .min(1, "Tilte is required")
-    .trim(),
+  title: z.preprocess(
+    (val) => (typeof val === "string" ? val : ""),
+    z.string().trim().min(1, "Title is required")
+  ),
 
-  description: z
-    .string({ message: "Invalid" })
-    .min(1, "Description is required")
-    .trim(),
+  description: z.preprocess(
+    (val) => (typeof val === "string" ? val : ""),
+    z.string().trim().min(1, "Description is required")
+  ),
+
   status: statusSchema,
 });
-

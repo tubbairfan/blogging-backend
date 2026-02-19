@@ -1,6 +1,11 @@
 import type { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
 
+const getImageUrl = (req: Request) => {
+  if (!req.file) return null;
+  return `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+};
+
 // Create Article
 export const createArticle = async (req: Request, res: Response) => {
   try {
@@ -20,12 +25,16 @@ export const createArticle = async (req: Request, res: Response) => {
         message: "Category not found",
       });
     }
+
+    const imageUrl = getImageUrl(req);
+
     const article = await prisma.article.create({
       data: {
         name,
         description,
         status,
         categoryId: category.id,
+        image: imageUrl,
       },
       include: { category: true },
     });
@@ -39,13 +48,12 @@ export const createArticle = async (req: Request, res: Response) => {
   }
 };
 
-
 export const getArticles = async (_req: Request, res: Response) => {
   try {
     const articles = await prisma.article.findMany({
       include: {
         category: {
-          select: { title: true }, 
+          select: { title: true },
         },
       },
       orderBy: { createdAt: "desc" },
@@ -60,7 +68,7 @@ export const getArticles = async (_req: Request, res: Response) => {
 
 export const getSingleArticle = async (req: Request, res: Response) => {
   try {
-    let { id } = req.params;
+    const { id } = req.params;
 
     const articleId = Number(id);
     if (isNaN(articleId)) {
@@ -117,6 +125,8 @@ export const updateArticle = async (req: Request, res: Response) => {
       categoryId = category.id;
     }
 
+    const imageUrl = getImageUrl(req);
+
     const updated = await prisma.article.update({
       where: { id: Number(id) },
       data: {
@@ -124,6 +134,7 @@ export const updateArticle = async (req: Request, res: Response) => {
         description,
         status,
         categoryId,
+        ...(imageUrl ? { image: imageUrl } : {}),
       },
       include: { category: true },
     });

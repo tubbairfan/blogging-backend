@@ -8,14 +8,14 @@ import {
 } from "../controllers/article.controller";
 import { validateBody } from "../middlewares/validation";
 import { createArticleSchema } from "../validators/article.schema";
-
+import upload from "../middlewares/upload";
 
 const router = express.Router();
 
-router.post("/", validateBody(createArticleSchema), createArticle);       
-router.get("/", getArticles);   
-router.get("/:id", getSingleArticle);       
-router.put("/:id", updateArticle);     
-router.delete("/:id", deleteArticle);  
+router.post("/", upload.single("image"), validateBody(createArticleSchema), createArticle);
+router.get("/", getArticles);
+router.get("/:id", getSingleArticle);
+router.put("/:id", upload.single("image"), updateArticle);
+router.delete("/:id", deleteArticle);
 
 export default router;

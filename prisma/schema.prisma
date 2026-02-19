@@ -20,8 +20,9 @@ model Category {
   id          Int       @id @default(autoincrement())
   title       String
   description String
-  slug         String? 
-  status      Status    @default(DRAFT) 
+  slug         String?
+  image       String?
+  status      Status    @default(DRAFT)
   articles    Article[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -31,7 +32,8 @@ model Article {
   id          Int      @id @default(autoincrement())
   name        String
   description String
-  status      Status    @default(DRAFT) 
+  image       String?
+  status      Status    @default(DRAFT)
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])
   createdAt   DateTime @default(now())
