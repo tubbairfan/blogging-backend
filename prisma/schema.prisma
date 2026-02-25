@@ -12,9 +12,17 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-enum Status {
+enum CategoryStatus {
   ACTIVE
   DRAFT
+}
+enum ArticleStatus {
+  ACTIVE
+  DRAFT
+}
+enum Role {
+  USER
+  ADMIN
 }
 model Category {
   id          Int       @id @default(autoincrement())
@@ -22,10 +30,12 @@ model Category {
   description String
   slug         String?
   image       String?
-  status      Status    @default(DRAFT)
+  status      CategoryStatus    @default(DRAFT)
   articles    Article[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  
+   @@index([status])
 }
 
 model Article {
@@ -33,9 +43,25 @@ model Article {
   name        String
   description String
   image       String?
-  status      Status    @default(DRAFT)
+  status      ArticleStatus    @default(DRAFT)
   categoryId  Int
   category    Category @relation(fields: [categoryId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([status])
+}
+
+model User {
+  id               Int      @id @default(autoincrement())
+  name             String
+  email            String   @unique
+  password         String
+   role            Role     @default(USER)
+  isVerified       Boolean  @default(false)
+  verificationCode String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  @@index([isVerified])
 }

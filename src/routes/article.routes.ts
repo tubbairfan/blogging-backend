@@ -9,13 +9,14 @@ import {
 import { validateBody } from "../middlewares/validation";
 import { createArticleSchema } from "../validators/article.schema";
 import upload from "../middlewares/upload";
+import { verifyAdmin } from "../middlewares/auth";
 
 const router = express.Router();
 
-router.post("/", upload.single("image"), validateBody(createArticleSchema), createArticle);
+router.post("/", verifyAdmin, upload.single("image"), validateBody(createArticleSchema), createArticle);
 router.get("/", getArticles);
 router.get("/:id", getSingleArticle);
-router.put("/:id", upload.single("image"), updateArticle);
-router.delete("/:id", deleteArticle);
+router.put("/:id", verifyAdmin, upload.single("image"), updateArticle);
+router.delete("/:id", verifyAdmin, deleteArticle);
 
 export default router;

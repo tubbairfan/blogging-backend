@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { prisma } from "../lib/prisma";
-import { CategoryErrors } from "../validators/categoryErrors";
+import { CategoryErrors } from "../../utils/categoryErrors";
 import slugify from "slugify";
 
 const getImageUrl = (req: Request) => {

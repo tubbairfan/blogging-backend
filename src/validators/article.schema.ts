@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { statusSchema } from "./common.schema";
+import { statusSchema } from "../../utils/common.schema";
 
 export const createArticleSchema = z.object({
   name: z
