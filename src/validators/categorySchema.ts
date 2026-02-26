@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { statusSchema } from "../../utils/common.schema";
+import { statusSchema } from "../../utils/common.schema.js";
 
 export const createCategorySchema = z.object({
   title: z.preprocess(

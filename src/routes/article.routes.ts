@@ -5,11 +5,11 @@ import {
   updateArticle,
   deleteArticle,
   getSingleArticle
-} from "../controllers/article.controller";
-import { validateBody } from "../middlewares/validation";
-import { createArticleSchema } from "../validators/article.schema";
-import upload from "../middlewares/upload";
-import { verifyAdmin } from "../middlewares/auth";
+} from "../controllers/article.controller.js";
+import { validateBody } from "../middlewares/validation.js";
+import { createArticleSchema } from "../validators/article.schema.js";
+import upload from "../middlewares/upload.js";
+import { verifyAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
 

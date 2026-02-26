@@ -1,9 +1,9 @@
 import express from "express";
-import upload from "../middlewares/upload";
-import { createCategory, updateCategory, getCategories, deleteCategory, getCategoryById } from "../controllers/category.controller";
-import { validateBody } from "../middlewares/validation";
-import { createCategorySchema } from "../validators/categorySchema";
-import { verifyAdmin } from "../middlewares/auth";
+import upload from "../middlewares/upload.js";
+import { createCategory, updateCategory, getCategories, deleteCategory, getCategoryById } from "../controllers/category.controller.js";
+import { validateBody } from "../middlewares/validation.js";
+import { createCategorySchema } from "../validators/categorySchema.js";
+import { verifyAdmin } from "../middlewares/auth.js";
 
 const router = express.Router();
 

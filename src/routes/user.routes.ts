@@ -9,9 +9,9 @@ import {
   forgotPassword,
   resetPassword,
   changePassword,
-} from "../controllers/user.controller";
-import { verifyUser } from "../middlewares/auth";
-import { validateBody } from "../middlewares/validation";
+} from "../controllers/user.controller.js";
+import { verifyUser } from "../middlewares/auth.js";
+import { validateBody } from "../middlewares/validation.js";
 import {
   changePasswordSchema,
   forgotPasswordSchema,
