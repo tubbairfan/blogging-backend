@@ -7,7 +7,7 @@ import {
   generateAccessToken,
   generateRefreshToken,
   verifyRefreshToken,
-} from "../../utils/jwt";
+} from "../../utils/jwt.js";
 
 const createMailTransporter = () => {
   return nodemailer.createTransport({

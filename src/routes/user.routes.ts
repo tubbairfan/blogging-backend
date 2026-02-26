@@ -20,7 +20,7 @@ import {
   sendOtpSchema,
   signupSchema,
   verifyOtpSchema,
-} from "../validators/user.schema";
+} from "../validators/user.schema.js";
 
 const router = Router();
 
