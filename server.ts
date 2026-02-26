@@ -19,10 +19,6 @@ app.use(cors({
 }));
 
 
-app.options(/.*/, cors({
-  origin: "https://blogging-jb7j8zcz7-tubbas-projects.vercel.app",
-  credentials: true,
-}));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -33,6 +29,11 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/articles", articleRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
+app.get("/api/hello", (req, res) => {
+  res.json({
+    message: "Hello from backend 👋",
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
