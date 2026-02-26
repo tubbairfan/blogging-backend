@@ -10,18 +10,21 @@ import userRoutes from "./src/routes/user.routes";
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:3001"
+  "https://blogging-one-sigma.vercel.app"
 ];
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    optionsSuccessStatus: 204,
   })
 );
+
 
 app.use(express.json());
 app.use(cookieParser());
