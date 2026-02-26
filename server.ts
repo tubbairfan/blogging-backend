@@ -3,10 +3,10 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
-import categoryRoutes from "./src/routes/category.routes";
-import articleRoutes from "./src/routes/article.routes";
-import adminRoutes from "./src/routes/admin.routes";
-import userRoutes from "./src/routes/user.routes";
+import categoryRoutes from "./src/routes/category.routes.js";
+import articleRoutes from "./src/routes/article.routes.js";
+import adminRoutes from "./src/routes/admin.routes.js";
+import userRoutes from "./src/routes/user.routes.js";
 const app = express();
 
 const allowedOrigins = [
@@ -15,16 +15,12 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
-      return callback(new Error("Not allowed by CORS"));
-    },
+    origin: "https://blogging-one-sigma.vercel.app",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
 
 app.use(express.json());
 app.use(cookieParser());
