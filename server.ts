@@ -9,10 +9,6 @@ import adminRoutes from "./src/routes/admin.routes.js";
 import userRoutes from "./src/routes/user.routes.js";
 const app = express();
 
-const allowedOrigins = [
-  "https://blogging-one-sigma.vercel.app"
-];
-
 app.use(
   cors({
     origin: "https://blogging-one-sigma.vercel.app",
