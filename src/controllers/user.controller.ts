@@ -108,7 +108,8 @@ export const login = async (req: Request, res: Response) => {
       message: "Login successful",
       user: { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified },
     });
-  } catch {
+  } catch (error) {
+    console.error("LOGIN_ERROR:", error);
     res.status(500).json({ message: "Login failed" });
   }
 };
