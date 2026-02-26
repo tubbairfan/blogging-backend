@@ -12,7 +12,7 @@ import userRoutes from "./src/routes/user.routes.js";
 const app = express();
 
 app.use(cors({
-  origin: "https://blogging-one-sigma.vercel.app", 
+  origin: "https://blogging-jb7j8zcz7-tubbas-projects.vercel.app", 
   credentials: true,
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"],
@@ -20,7 +20,7 @@ app.use(cors({
 
 
 app.options(/.*/, cors({
-  origin: "https://blogging-one-sigma.vercel.app",
+  origin: "https://blogging-jb7j8zcz7-tubbas-projects.vercel.app",
   credentials: true,
 }));
 
